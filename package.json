@@ -1,0 +1,31 @@
+{
+  "name": "ajv-class",
+  "version": "0.1.0",
+  "description": "Improved class interface for ajv",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "bump": "npm --no-git-tag-version version",
+    "prepublishOnly": "npm run build",
+    "test": "jest --coverage",
+    "test:watch": "npm run test -- --watch",
+    "check": "npm run check:lint && npm run check:build",
+    "check:build": "tsc --noEmit",
+    "check:lint": "eslint src/** test/**"
+  },
+  "keywords": [
+    "ajv",
+    "wrapper"
+  ],
+  "author": "Keith Wade <keawade@protonmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^6.12.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.2",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.5"
+  }
+}
