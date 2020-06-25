@@ -14,7 +14,7 @@ export class AjvSimpleWrapper {
   }
 
   public validate = (input: JsonObject | Json): boolean => {
-    const valid = this.ajvValidate(input) as true;
+    const valid = this.ajvValidate(input) as boolean;
 
     if (!valid) {
       throw new AjvError('Validation failed!', this.ajvValidate.errors);
