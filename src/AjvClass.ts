@@ -13,8 +13,8 @@ export class AjvSimpleWrapper {
     this.ajvValidate = this.ajv.compile(schema);
   }
 
-  public validate = (input: JsonObject | Json) => {
-    const valid = this.ajvValidate(input);
+  public validate = (input: JsonObject | Json): boolean => {
+    const valid = this.ajvValidate(input) as true;
 
     if (!valid) {
       throw new AjvError('Validation failed!', this.ajvValidate.errors);
@@ -27,6 +27,7 @@ export class AjvSimpleWrapper {
 class AjvError extends Error {
   public errors;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(message: string, ajvErrors: any[]) {
     super(message) /* istanbul ignore next - I don't know why that semicolon is 'uncovered' */;
     this.errors = ajvErrors;
