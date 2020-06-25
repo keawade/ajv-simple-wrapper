@@ -1,4 +1,4 @@
-import { AjvClass } from './AjvClass';
+import { AjvSimpleWrapper } from './AjvClass';
 
-export { AjvClass as Ajv };
-export default AjvClass;
+export { AjvSimpleWrapper as Ajv };
+export default AjvSimpleWrapper;

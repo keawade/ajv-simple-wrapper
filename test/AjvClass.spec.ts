@@ -1,6 +1,6 @@
 import { Ajv } from '../src';
 
-describe('Ajv Class', () => {
+describe('Ajv Wrapper Class', () => {
   it('should be new-able', () => {
     const ajv = new Ajv({});
 

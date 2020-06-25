@@ -1,7 +1,7 @@
 import * as AJV from 'ajv';
 import { JsonObject, Json } from './interfaces/Json';
 
-export class AjvClass {
+export class AjvSimpleWrapper {
   private ajv: AJV.Ajv = new AJV();
   private ajvValidate: AJV.ValidateFunction;
 
