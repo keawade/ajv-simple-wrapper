@@ -1,5 +1,5 @@
 import * as AJV from 'ajv';
-import { JsonObject, Json } from './interfaces/Json';
+import { JsonObject } from './interfaces/Json';
 import { IAjvSimpleWrapperConfig } from './interfaces/IAjvSimpleWrapperConfig';
 
 export class AjvSimpleWrapper {
@@ -28,7 +28,7 @@ export class AjvSimpleWrapper {
     return this.ajvValidate.errors;
   }
 
-  public validate = (input: JsonObject | Json): boolean => {
+  public validate = (input: unknown): boolean => {
     const valid = this.ajvValidate(input) as boolean;
 
     if (!valid && this.config.throwOnValidationError) {
