@@ -19,13 +19,14 @@
   ],
   "author": "Keith Wade <keawade@protonmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "ajv": "^6.12.2"
+  "peerDependencies": {
+    "ajv": "6.x"
   },
   "devDependencies": {
     "@types/jest": "^26.0.2",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
+    "ajv": "^6.12.4",
     "eslint": "^7.3.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
