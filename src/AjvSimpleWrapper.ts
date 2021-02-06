@@ -1,10 +1,11 @@
-import * as AJV from 'ajv';
+import { default as Ajv, ValidateFunction, ErrorObject } from 'ajv';
 import { IAjvSimpleWrapperConfig } from './interfaces/IAjvSimpleWrapperConfig';
 import { JsonSchema } from './interfaces/JsonSchema';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class AjvSimpleWrapper {
-  private ajv: AJV.Ajv = new AJV();
-  private ajvValidate: AJV.ValidateFunction;
+  private ajv: Ajv = new Ajv();
+  private ajvValidate: ValidateFunction;
   private config: IAjvSimpleWrapperConfig;
 
   constructor(schema: JsonSchema, config?: Partial<IAjvSimpleWrapperConfig>) {
@@ -24,12 +25,12 @@ export class AjvSimpleWrapper {
     this.ajvValidate = this.ajv.compile(schema);
   }
 
-  public get errors(): AJV.ErrorObject[] | null {
+  public get errors(): ErrorObject[] | null {
     return this.ajvValidate.errors;
   }
 
   public validate = (input: unknown): boolean => {
-    const valid = this.ajvValidate(input) as boolean;
+    const valid = this.ajvValidate(input);
 
     if (!valid && this.config.throwOnValidationError) {
       throw new AjvError('Validation failed!', this.errors);
