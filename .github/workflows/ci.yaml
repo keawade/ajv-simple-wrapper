@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - master
+
+jobs:
+  test-and-publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter and compiler checks
+        run: npm run check
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Setup variables
+        run: |
+          export APP_VERSION=$(jq -r .version package.json)
+          export BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
+          if [ $BRANCH_NAME = "master" ]; then
+            echo "PACKAGE_VERSION=$APP_VERSION" >> $GITHUB_ENV
+            echo "VERSION_TAG=latest" >> $GITHUB_ENV
+          else
+            echo "PACKAGE_VERSION=$APP_VERSION-alpha.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+            echo "VERSION_TAG=alpha" >> $GITHUB_ENV
+          fi
+
+      - name: Build library
+        if: env.IS_PR == 'false'
+        run: npm run build
+
+      - name: Version
+        if: env.BRANCH_NAME != 'master' && env.IS_PR == 'false'
+        run: npm version "$PACKAGE_VERSION" --no-git-tag-version
+
+      - name: NPM Publish
+        if: env.IS_PR == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: npm publish --tag=$VERSION_TAG --access=public
