@@ -1,4 +1,5 @@
 export type JsonSchema =
+  | Record<string, unknown>
   | JsonSchemaString
   | JsonSchemaNumber
   | JsonSchemaObject

@@ -32,7 +32,8 @@ describe('AjvSimpleWrapper Wrapper Class', () => {
 
     it('should throw if JSON schema is invalid', () => {
       try {
-        new AjvSimpleWrapper({ type: 'not-real' });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        new AjvSimpleWrapper({ type: 'not-real' } as any);
         fail('should have thrown an error');
       } catch (err) {
         expect(err.message).toBe('Invalid schema!');
