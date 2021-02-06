@@ -1,6 +1,6 @@
 {
   "name": "ajv-simple-wrapper",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Improved class interface for ajv",
   "main": "dist/index.js",
   "scripts": {
