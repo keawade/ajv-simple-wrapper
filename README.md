@@ -35,7 +35,7 @@ try {
     bar: 'not a number!',
   });
 } catch (err) {
-  console.error('Validation failed!', err);w
+  console.error('Validation failed!', err);
 }
 ```
 
