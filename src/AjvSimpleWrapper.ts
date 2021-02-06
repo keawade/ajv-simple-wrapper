@@ -1,13 +1,13 @@
 import * as AJV from 'ajv';
-import { JsonObject } from './interfaces/Json';
 import { IAjvSimpleWrapperConfig } from './interfaces/IAjvSimpleWrapperConfig';
+import { JsonSchema } from './interfaces/JsonSchema';
 
 export class AjvSimpleWrapper {
   private ajv: AJV.Ajv = new AJV();
   private ajvValidate: AJV.ValidateFunction;
   private config: IAjvSimpleWrapperConfig;
 
-  constructor(schema: JsonObject, config?: Partial<IAjvSimpleWrapperConfig>) {
+  constructor(schema: JsonSchema, config?: Partial<IAjvSimpleWrapperConfig>) {
     if (!schema) {
       throw new Error('Schema required!');
     }
@@ -24,7 +24,7 @@ export class AjvSimpleWrapper {
     this.ajvValidate = this.ajv.compile(schema);
   }
 
-  public get errors(): AJV.ErrorObject[] {
+  public get errors(): AJV.ErrorObject[] | null {
     return this.ajvValidate.errors;
   }
 
